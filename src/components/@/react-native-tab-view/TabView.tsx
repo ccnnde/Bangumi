@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { StyleSheet, View, StyleProp, ViewStyle, LayoutChangeEvent } from 'react-native'
+import { BlurView as RNBlurView } from '@react-native-community/blur'
 import { PanGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
 import TabBar, { Props as TabBarProps } from 'react-native-tab-view/src/TabBar'
@@ -144,11 +145,21 @@ export default class TabView<T extends Route> extends React.Component<Props<T>, 
                 {positionListener ? (
                   <Animated.Code exec={Animated.set(positionListener, position)} />
                 ) : null}
-                {tabBarPosition === 'top' &&
-                  renderTabBar({
-                    ...sceneRendererProps,
-                    navigationState
-                  })}
+                {tabBarPosition === 'top' && (
+                  <View
+                    style={{
+                      zIndex: 1,
+                      overflow: 'hidden'
+                    }}
+                  >
+                    <RNBlurView blurAmount={40} overlayColor='rgba(0, 0, 0, 0.5)'>
+                      {renderTabBar({
+                        ...sceneRendererProps,
+                        navigationState
+                      })}
+                    </RNBlurView>
+                  </View>
+                )}
                 {renderContentHeaderComponent}
                 {render(
                   navigationState.routes.map((route, i) => {

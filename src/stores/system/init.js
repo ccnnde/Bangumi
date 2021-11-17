@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2019-07-13 14:00:59
  * @Last Modified by: czy0729
- * @Last Modified time: 2021-11-12 11:58:01
+ * @Last Modified time: 2021-11-18 01:25:32
  */
 import { VERSION_GITHUB_RELEASE } from '@constants'
 import {
@@ -41,6 +41,7 @@ export const INIT_SUBJECT_LAYOUT = {
 }
 
 export const INIT_SETTING = {
+  androidBlur: true, // 安卓首页Tab启用高斯模糊效果
   s2t: false, // 简体转繁体
   deepDark: true, // 黑暗模式是否纯黑
   simple: true, // 设置页面显示最基本的设置

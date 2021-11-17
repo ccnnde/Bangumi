@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2020-06-03 09:53:54
  * @Last Modified by: czy0729
- * @Last Modified time: 2021-10-14 17:55:24
+ * @Last Modified time: 2021-11-18 02:06:42
  */
 import React from 'react'
 import { TabBar } from 'react-native-tab-view'
@@ -10,7 +10,7 @@ import TabView from '@components/@/react-native-tab-view/TabView'
 import { Flex, Text } from '@components'
 import { _ } from '@stores'
 import { obc } from '@utils/decorators'
-import { IOS, DEV } from '@constants'
+import { IOS } from '@constants'
 import { H_TABBAR } from './store'
 
 function Tab({ routes, renderScene }, { $ }) {
@@ -71,9 +71,10 @@ const W_INDICATOR = 16 * _.ratio
 const memoStyles = _.memoStyles(_ => ({
   tabBar: {
     paddingTop: _.headerHeight - (IOS ? 18 : 24),
-    backgroundColor: IOS
-      ? 'transparent'
-      : _.select(_.colorPlain, _.deepDark ? _._colorPlain : _._colorDarkModeLevel1),
+    // backgroundColor: IOS
+    //   ? 'transparent'
+    //   : _.select(_.colorPlain, _.deepDark ? _._colorPlain : _._colorDarkModeLevel1),
+    backgroundColor: 'transparent',
     borderBottomWidth: IOS ? 0 : _.select(_.hairlineWidth, 0),
     borderBottomColor: _.colorBorder,
     elevation: 0

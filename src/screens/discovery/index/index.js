@@ -2,13 +2,13 @@
  * @Author: czy0729
  * @Date: 2019-03-22 08:46:49
  * @Last Modified by: czy0729
- * @Last Modified time: 2021-10-19 22:17:54
+ * @Last Modified time: 2021-11-18 01:40:14
  */
 import React from 'react'
 import { View } from 'react-native'
 import { StatusBarEvents, ListView, UM, Heatmap } from '@components'
 import { IconTabBar, IconPortal } from '@screens/_'
-import { _ } from '@stores'
+import { _, systemStore } from '@stores'
 import { runAfter } from '@utils'
 import { inject, obc } from '@utils/decorators'
 import { hm } from '@utils/fetch'
@@ -45,14 +45,20 @@ class Discovery extends React.Component {
     const { $ } = this.context
     const { dragging } = $.state
     const { isFocused } = this.props
+    const { androidBlur } = systemStore.setting
+    const showBlurView = !IOS && androidBlur
     return (
       <View style={_.container._plain}>
         <UM screen={title} />
         <StatusBarEvents backgroundColor='transparent' />
         <ListView
           ref={$.connectRef}
-          style={styles.listView}
-          contentContainerStyle={styles.contentContainerStyle}
+          style={showBlurView ? styles.listViewBlur : styles.listView}
+          contentContainerStyle={
+            showBlurView
+              ? styles.contentContainerStyleBlur
+              : styles.contentContainerStyle
+          }
           keyExtractor={keyExtractor}
           data={$.state.home}
           ListHeaderComponent={this.ListHeaderComponent}
@@ -75,8 +81,15 @@ const styles = _.create({
     flex: 1,
     marginBottom: IOS ? 0 : _.tabBarHeight - 1
   },
+  listViewBlur: {
+    flex: 1,
+    marginBottom: 0
+  },
   contentContainerStyle: {
     paddingBottom: (IOS ? _.bottom : _.bottom - _.tabBarHeight) + _.md
+  },
+  contentContainerStyleBlur: {
+    paddingBottom: _.bottom + _.md
   }
 })
 

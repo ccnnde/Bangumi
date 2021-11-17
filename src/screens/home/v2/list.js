@@ -2,11 +2,11 @@
  * @Author: czy0729
  * @Date: 2019-03-14 15:13:57
  * @Last Modified by: czy0729
- * @Last Modified time: 2021-08-18 17:53:17
+ * @Last Modified time: 2021-11-18 02:04:33
  */
 import React from 'react'
 import { Loading, ListView } from '@components'
-import { _ } from '@stores'
+import { _, systemStore } from '@stores'
 import { obc } from '@utils/decorators'
 import { IOS } from '@constants'
 import { MODEL_SETTING_HOME_LAYOUT, MODEL_SUBJECT_TYPE } from '@constants/model'
@@ -40,11 +40,16 @@ function List({ title }, { $ }) {
   const index = $.tabs.findIndex(item => item.title === title)
   const data = $.currentUserCollection(title)
   const { length } = data.list
+  const { androidBlur } = systemStore.setting
   return (
     <ListView
       ref={ref => $.connectRef(ref, index)}
-      style={!IOS && styles.androidWrap}
-      contentContainerStyle={styles.contentContainerStyle}
+      style={
+        IOS ? undefined : androidBlur ? styles.androidWrapBlur : styles.androidWrap
+      }
+      contentContainerStyle={
+        androidBlur ? styles.contentContainerStyleBlur : styles.contentContainerStyle
+      }
       keyExtractor={keyExtractor}
       data={data}
       footerNoMoreDataText=''
@@ -71,7 +76,16 @@ const memoStyles = _.memoStyles(_ => ({
     backgroundColor: _.colorBg
   },
   contentContainerStyle: {
-    paddingBottom: IOS ? _.bottom : _.bottom - _.tabBarHeight
+    paddingBottom: _.bottom
+  },
+
+  // with blurView
+  androidWrapBlur: {
+    marginTop: -_.tabsHeaderHeight
+  },
+  contentContainerStyleBlur: {
+    paddingTop: _.tabsHeaderHeight,
+    paddingBottom: _.bottom
   }
 }))
 

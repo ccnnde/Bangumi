@@ -2,10 +2,13 @@
  * @Author: czy0729
  * @Date: 2019-11-30 10:30:17
  * @Last Modified by: czy0729
- * @Last Modified time: 2021-11-14 17:56:29
+ * @Last Modified time: 2021-11-18 01:29:51
  */
 import { StyleSheet, InteractionManager, Appearance } from 'react-native'
-import changeNavigationBarColor from 'react-native-navigation-bar-color'
+import changeNavigationBarColor, {
+  hideNavigationBar,
+  showNavigationBar
+} from 'react-native-navigation-bar-color'
 import { observable, computed } from 'mobx'
 import store from '@utils/store'
 import { androidDayNightToggle } from '@utils/ui'
@@ -88,6 +91,11 @@ class Theme extends store {
 
   @computed get isDark() {
     return this.mode === 'dark'
+  }
+
+  @computed get androidBlur() {
+    const { androidBlur } = systemStore.setting
+    return androidBlur
   }
 
   @computed get autoColorScheme() {
@@ -411,6 +419,9 @@ class Theme extends store {
       left: {
         marginLeft: _.wind
       },
+      block: {
+        width: '100%'
+      },
       w100: {
         width: '100%'
       },
@@ -660,31 +671,31 @@ class Theme extends store {
   changeNavigationBarColor = () => {
     if (IOS) return
 
-    try {
-      InteractionManager.runAfterInteractions(() => {
-        changeNavigationBarColor(
-          this.select(
-            _.colorPlainHex,
-            this.deepDark
-              ? _._colorThemeDeepDark.colorPlainHex
-              : _._colorDarkModeLevel1Hex
-          ),
-          !this.isDark
+    if (this.androidBlur) return hideNavigationBar()
+
+    InteractionManager.runAfterInteractions(() => {
+      try {
+        showNavigationBar()
+
+        const color = this.select(
+          _.colorPlainHex,
+          this.deepDark
+            ? _._colorThemeDeepDark.colorPlainHex
+            : _._colorDarkModeLevel1Hex
         )
+        changeNavigationBarColor(color, !this.isDark)
         androidDayNightToggle(this.isDark)
-      })
-    } catch (error) {
-      console.warn('[ThemeStore] changeNavigationBarColor', error)
-    }
+      } catch (error) {
+        console.warn('[ThemeStore] changeNavigationBarColor', error)
+      }
+    })
   }
 
   /**
    * 小圣杯模块, 安卓改变底部菜单颜色
    */
   changeNavigationBarColorTinygrail = () => {
-    if (IOS) {
-      return
-    }
+    if (IOS) return
 
     try {
       InteractionManager.runAfterInteractions(() => {

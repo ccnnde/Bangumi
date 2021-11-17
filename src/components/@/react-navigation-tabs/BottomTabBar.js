@@ -1,9 +1,8 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /*
  * @Author: czy0729
  * @Date: 2021-01-15 09:55:17
  * @Last Modified by: czy0729
- * @Last Modified time: 2021-07-06 08:24:27
+ * @Last Modified time: 2021-11-18 00:26:28
  */
 import React from 'react'
 import {
@@ -229,8 +228,7 @@ class TabBarBottom extends React.Component {
             ? activeBackgroundColor
             : inactiveBackgroundColor
           const ButtonComponent =
-            this.props.getButtonComponent({ route }) ||
-            TouchableWithoutFeedbackWrapper
+            this.props.getButtonComponent({ route }) || TouchableWithoutFeedbackWrapper
           return (
             <ButtonComponent
               key={route.key}
@@ -245,7 +243,7 @@ class TabBarBottom extends React.Component {
                   ? styles.tabLandscape
                   : styles.tabPortrait,
                 tabStyle,
-                { backgroundColor: 'transparent' }
+                styles.transparent
               ]}
             >
               {this._renderIcon(scene)}
@@ -306,6 +304,9 @@ const styles = StyleSheet.create({
   labelBeside: {
     fontSize: 12,
     marginLeft: 15
+  },
+  transparent: {
+    backgroundColor: 'transparent'
   }
 })
 

@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
 /*
  * @Author: czy0729
  * @Date: 2019-03-13 08:34:37
  * @Last Modified by: czy0729
- * @Last Modified time: 2021-11-11 22:25:04
+ * @Last Modified time: 2021-11-18 01:31:59
  */
 import React from 'react'
 import { NavigationEvents } from 'react-navigation'
@@ -12,8 +11,8 @@ import {
   StatusBarEvents,
   IconTabBar,
   NavigationBarEvents,
-  SafeAreaView,
-  IconPortal
+  SafeAreaView
+  // IconPortal
 } from '@screens/_'
 import { _, userStore } from '@stores'
 import { runAfter } from '@utils'
@@ -87,7 +86,10 @@ class Home extends React.Component {
 
   render() {
     const { $ } = this.context
-    const { isFocused, _loaded } = $.state
+    const {
+      // isFocused,
+      _loaded
+    } = $.state
     return (
       <SafeAreaView style={IOS ? _.container.bg : _.container._plain}>
         <StatusBarEvents backgroundColor='transparent' />
