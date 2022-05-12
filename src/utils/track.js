@@ -1,17 +1,21 @@
+/* eslint-disable no-unused-vars */
 /*
  * @Author: czy0729
  * @Date: 2022-04-13 00:32:21
  * @Last Modified by: czy0729
- * @Last Modified time: 2022-04-13 01:32:07
+ * @Last Modified time: 2022-05-12 16:05:51
  */
-import { NativeModules, InteractionManager } from 'react-native'
+import {
+  // NativeModules,
+  InteractionManager
+} from 'react-native'
 import { DEV, HOST, IOS, VERSION_GITHUB_RELEASE } from '@constants'
 import events from '@constants/events'
 import { urlStringify, getTimestamp, randomn } from './utils'
 import { getUserStoreAsync, getThemeStoreAsync } from './async'
 import { log } from './dev'
 
-const { UMAnalyticsModule } = NativeModules
+// const { UMAnalyticsModule } = NativeModules
 
 let lastQuery = ''
 let currentUrl = ''
@@ -125,6 +129,7 @@ export function err(desc) {
  * @param {*} u
  */
 export function t(desc, eventData) {
+  /*
   if (!desc) return
 
   // fixed: 遗留问题, 显示为登录, 统计还是以前录入的登陆
@@ -172,5 +177,5 @@ export function t(desc, eventData) {
     })
   } catch (error) {
     console.warn('[track] t', error)
-  }
+  }*/
 }
